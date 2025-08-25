@@ -1,5 +1,6 @@
 import { NgFor, CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { CourseService } from '../course-service';
 
 @Component({
   selector: 'cdev-course',
@@ -9,28 +10,24 @@ import { Component } from '@angular/core';
 })
 export class Course {
   title = 'Courses';
+  courseService: CourseService;
 
-  courses = [
-    {
-      id: 1,
-      name: 'Angular Basics',
-      description: 'Learn the basics of Angular',
-      duration: '3 hours',
-      price: 29.99,
-    },
-    {
-      id: 2,
-      name: 'Advanced Angular',
-      description: 'Deep dive into Angular',
-      duration: '5 hours',
-      price: 49.99,
-    },
-    {
-      id: 3,
-      name: 'Angular and Firebase',
-      description: 'Build apps with Angular and Firebase',
-      duration: '4 hours',
-      price: 39.99,
-    },
-  ];
+  courses:{ id: number, name: string, description: string, duration: string, price: number }[] = [];
+
+  constructor(courseService: CourseService) {
+    this.courseService = courseService;
+    this.courses = this.courseService.getCourses();
+  }
+
+  addCourse() {
+    const newCourse = {
+      id: this.courses.length + 1,
+      name: 'New Course',
+      description: 'Description of the new course',
+      duration: '2 hours',
+      price: 19.99,
+    };
+    this.courseService.addCourse(newCourse);
+    this.courses = this.courseService.getCourses();
+  }
 }
