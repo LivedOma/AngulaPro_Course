@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
 })
 export class Course {
   title = 'Courses';
-  createdAt = new Date();
 
   courses = [
     {
